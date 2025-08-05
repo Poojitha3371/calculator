@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #f8cdda 0%, #a1c4fd 100%);
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Poppins', 'Segoe UI', 'Roboto', Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 0;
+      background: url('data:image/svg+xml;utf8,<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="30" r="1.5" fill="%23e0c3fc"/><circle cx="10" cy="50" r="1" fill="%23b5ead7"/><circle cx="50" cy="10" r="1" fill="%23b5ead7"/></svg>');
+      opacity: 0.18;
+      background-repeat: repeat;
+      background-size: 60px 60px;
+    }
+    h1 {
+      color: #fff;
+      font-size: 2.7rem;
+      margin-bottom: 28px;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 12px #a1c4fd99;
+      text-align: center;
+      font-weight: 600;
+      z-index: 1;
+    }
+    .calculator {
+      background: rgba(255,255,255,0.97);
+      padding: 32px 26px 26px 26px;
+      border-radius: 28px;
+      box-shadow: 0 8px 32px 0 rgba(161, 196, 253, 0.25), 0 2px 8px rgba(248, 205, 218, 0.18);
+      width: 350px;
+      border: 2px solid #f8cdda;
+      transition: transform 0.3s cubic-bezier(.4,2,.6,1), box-shadow 0.3s;
+      z-index: 1;
+      animation: popIn 0.8s cubic-bezier(.4,2,.6,1);
+    }
+    .calculator:hover {
+    
+      box-shadow: 0 16px 48px 0 rgba(161, 196, 253, 0.32), 0 4px 16px rgba(248, 205, 218, 0.22);
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.85) translateY(40px); opacity: 0; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .display {
+      background: linear-gradient(90deg, #f8cdda 0%, #a1c4fd 100%);
+      color: #4a4a4a;
+      border-radius: 12px;
+      padding: 20px 20px 20px 20px;
+      margin-bottom: 24px;
+      text-align: right;
+      min-height: 48px;
+      letter-spacing: 1px;
+      overflow-x: auto;
+      box-shadow: 0 2px 8px #a1c4fd44;
+      font-weight: 600;
+      font-size: 2.1rem;
+      word-break: break-all;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    button {
+      padding: 20px 0;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #f8cdda 0%, #a1c4fd 100%);
+      color: #4a4a4a;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, transform 0.1s;
+      box-shadow: 0 2px 8px #a1c4fd33;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    button:hover {
+      background: linear-gradient(135deg, #a1c4fd 0%, #f8cdda 100%);
+      color: #fff;
+      transform: scale(1.07);
+    }
+    .operator {
+      background: linear-gradient(135deg, #b6e0fe 0%, #fbc2eb 100%);
+      color: #4a4a4a;
+      font-weight: bold;
+      box-shadow: 0 2px 8px #b6e0fe44;
+    }
+    .operator:hover {
+      background: linear-gradient(135deg, #fbc2eb 0%, #b6e0fe 100%);
+      color: #fff;
+    }
+    .equals {
+      background: linear-gradient(90deg, #a1c4fd 0%, #f8cdda 100%);
+      color: #4a4a4a;
+      grid-column: span 2;
+      font-weight: bold;
+      box-shadow: 0 2px 8px #a1c4fd44;
+    }
+    .equals:hover {
+      background: linear-gradient(90deg, #f8cdda 0%, #a1c4fd 100%);
+      color: #fff;
+    }
+    .clear {
+      background: linear-gradient(135deg, #fbc2eb 0%, #b6e0fe 100%);
+      color: #4a4a4a;
+      font-weight: bold;
+      box-shadow: 0 2px 8px #fbc2eb44;
+    }
+    .clear:hover {
+      background: linear-gradient(135deg, #b6e0fe 0%, #fbc2eb 100%);
+      color: #fff;
+    }
+    .backspace {
+      background: linear-gradient(135deg, #a1c4fd 0%, #f8cdda 100%);
+      color: #4a4a4a;
+      font-weight: bold;
+      box-shadow: 0 2px 8px #a1c4fd44;
+      font-size: 1.3rem;
+      padding: 0;
+      height: 48px;
+    }
+    .backspace:hover {
+      background: linear-gradient(135deg, #f8cdda 0%, #a1c4fd 100%);
+      color: #fff;
+    }
+    .backspace svg {
+      width: 24px;
+      height: 24px;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Calculator App</h1>
+  <div class="calculator">
+    <div class="display" id="display">0</div>
+    <div class="buttons">
+      <button onclick="appendNumber('7')">7</button>
+      <button onclick="appendNumber('8')">8</button>
+      <button onclick="appendNumber('9')">9</button>
+      <button class="operator" onclick="appendOperator('/')">÷</button>
+      <button onclick="appendNumber('4')">4</button>
+      <button onclick="appendNumber('5')">5</button>
+      <button onclick="appendNumber('6')">6</button>
+      <button class="operator" onclick="appendOperator('*')">×</button>
+      <button onclick="appendNumber('1')">1</button>
+      <button onclick="appendNumber('2')">2</button>
+      <button onclick="appendNumber('3')">3</button>
+      <button class="operator" onclick="appendOperator('-')">−</button>
+      <button onclick="appendNumber('0')">0</button>
+      <button onclick="appendDot()">.</button>
+      <button class="clear" onclick="clearDisplay()">C</button>
+      <button class="operator" onclick="appendOperator('+')">+</button>
+      <button class="backspace" onclick="backspace()" title="Backspace" aria-label="Backspace">
+        <!-- SVG icon for backspace -->
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6.414 4l-4.707 8 4.707 8H20a2 2 0 002-2V6a2 2 0 00-2-2H6.414zM20 18H7.586l-3.293-6 3.293-6H20v12zm-7.293-7.707l-1.414 1.414L13.586 13l-2.293 2.293 1.414 1.414L15 14.414l2.293 2.293 1.414-1.414L16.414 13l2.293-2.293-1.414-1.414L15 11.586l-2.293-2.293z" fill="currentColor"/>
+        </svg>
+      </button>
+      <button class="equals" onclick="compute()">=</button>
+    </div>
+  </div>
+  <script>
+    let expression = '';
+    let showingResult = false;
+    const display = document.getElementById('display');
+
+    function appendNumber(number) {
+      if (showingResult) {
+        expression = '';
+        showingResult = false;
+      }
+      if (expression.length > 30) return;
+      // Prevent leading zeros
+      if (/([+\-*/]|^)0$/.test(expression)) {
+        expression = expression.replace(/0$/, number);
+      } else {
+        expression += number;
+      }
+      updateDisplay();
+    }
+
+    function appendDot() {
+      if (showingResult) {
+        expression = '';
+        showingResult = false;
+      }
+      // Prevent multiple dots in a number
+      const parts = expression.split(/([+\-*/])/);
+      const last = parts[parts.length - 1];
+      if (last.includes('.')) return;
+      if (last === '' || /[+\-*/]/.test(last)) {
+        expression += '0.';
+      } else {
+        expression += '.';
+      }
+      updateDisplay();
+    }
+
+    function appendOperator(op) {
+      if (showingResult) {
+        showingResult = false;
+      }
+      if (expression === '') return;
+      // Prevent two operators in a row
+      if (/[+\-*/]$/.test(expression)) {
+        expression = expression.slice(0, -1) + op;
+      } else {
+        expression += op;
+      }
+      updateDisplay();
+    }
+
+    function compute() {
+      let result = calculateResult(expression);
+      display.textContent = result;
+      showingResult = true;
+      expression = result === 'Error' ? '' : result.toString();
+    }
+
+    function clearDisplay() {
+      expression = '';
+      showingResult = false;
+      updateDisplay();
+    }
+
+    function backspace() {
+      if (showingResult) {
+        expression = '';
+        showingResult = false;
+      }
+      if (expression.length > 0) {
+        expression = expression.slice(0, -1);
+        updateDisplay();
+      }
+    }
+
+    function updateDisplay() {
+      display.textContent = expression || '0';
+    }
+
+    function calculateResult(expr) {
+      if (!expr || /[+\-*/.]$/.test(expr)) return '';
+      try {
+        // Only allow numbers and operators
+        if (!/^[-+*/.\d ]+$/.test(expr)) return 'Error';
+        // eslint-disable-next-line no-eval
+        let val = Function('return ' + expr.replace(/\u2212/g, '-').replace(/\u00F7/g, '/').replace(/\u00D7/g, '*'))();
+        if (val === Infinity || val === -Infinity) return 'Error';
+        return Number.isFinite(val) ? val : '';
+      } catch {
+        return 'Error';
+      }
+    }
+
+    // Initialize display
+    updateDisplay();
+  </script>
+</body>
+</html>
