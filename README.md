@@ -2,10 +2,6 @@
 
 A clean and modern calculator built using **HTML**, **CSS**, and **JavaScript**. It performs basic arithmetic operations and has a user-friendly, responsive interface using a minimalist white and black theme.
 
-## 📸 Preview
-Screenshot 2025-08-06 042452.png
----
-
 ## 🚀 Features
 
 - ✅ Basic Arithmetic Operations: `+`, `−`, `×`, `÷`
@@ -35,14 +31,6 @@ Screenshot 2025-08-06 042452.png
 2. **Open the app**:
    - Double-click on `index.html`
    - Or right-click and select **"Open with Browser"**
-
----
-
-## 📷 Screenshot
-
-> *(Replace with your screenshot)*  
-> ![screenshot](screenshot.png)
-
 ---
 
 ## 📄 License
