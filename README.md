@@ -3,10 +3,7 @@
 A clean and modern calculator built using **HTML**, **CSS**, and **JavaScript**. It performs basic arithmetic operations and has a user-friendly, responsive interface using a minimalist white and black theme.
 
 ## 📸 Preview
-
-![Calculator Preview](screenshot.png)  
-*(Add your actual screenshot named `screenshot.png` to the root folder)*
-
+Screenshot 2025-08-06 042452.png
 ---
 
 ## 🚀 Features
